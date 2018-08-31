@@ -2,4 +2,8 @@
     <string name="app_name">FingerprintTest</string>
     <string name="instructions">Please place your fingertip on the sensor</string>
     <string name="mainScreenTitle">Fingerprint Authentication</string>
+    <string name="fp_not_supported">Your device doesn\'t support fingerprint authentication</string>
+    <string name="fp_no_permission">Please enable the fingerprint permission</string>
+    <string name="fp_no_fingertip_stored">No fingerprint configured. Please register at least one fingerprint in your device\'s Settings</string>
+    <string name="ask_user_enable_lockscreen">Please enable lockscreen security in your device\'s Settings</string>
 </resources>
