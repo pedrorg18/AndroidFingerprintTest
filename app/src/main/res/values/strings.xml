@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FingerprintTest</string>
+    <string name="instructions">Please place your fingertip on the sensor</string>
+    <string name="mainScreenTitle">Fingerprint Authentication</string>
 </resources>
