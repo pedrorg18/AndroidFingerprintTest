@@ -3,6 +3,7 @@ package com.example.proiggimenez.fingerprinttest;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.os.CancellationSignal;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -11,12 +12,16 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
 
+    private CancellationSignal cancellationSignal;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Button button = findViewById(R.id.authenticate);
+
+        cancellationSignal = new CancellationSignal();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
                             .setSubtitle(getString(R.string.biometric_subtitle))
                             .setDescription(getString(R.string.biometric_description))
                             .setNegativeButtonText(getString(R.string.biometric_negative_button_text))
+                            .setCancellationSignal(cancellationSignal)
                             .build()
                             .authenticate(new BiometricCallback() {
                                 @Override
@@ -63,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onAuthenticationCancelled() {
                                     Toast.makeText(getApplicationContext(), getString(R.string.biometric_cancelled), Toast.LENGTH_LONG).show();
+                                    cancellationSignal.cancel();
                                 }
 
                                 @Override

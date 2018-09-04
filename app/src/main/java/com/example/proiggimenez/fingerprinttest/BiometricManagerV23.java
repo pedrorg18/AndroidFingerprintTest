@@ -33,28 +33,27 @@ public class BiometricManagerV23 {
 
     private Cipher cipher;
     private KeyStore keyStore;
-    private KeyGenerator keyGenerator;
-    private FingerprintManagerCompat.CryptoObject cryptoObject;
 
 
-    protected Context context;
+    Context context;
 
     protected String title;
     protected String subtitle;
     protected String description;
-    protected String negativeButtonText;
+    String negativeButtonText;
+    CancellationSignal cancellationSignal;
     private BiometricDialogV23 biometricDialogV23;
 
 
-    public void displayBiometricPromptV23(final BiometricCallback biometricCallback) {
+    void displayBiometricPromptV23(final BiometricCallback biometricCallback) {
         generateKey();
 
         if(initCipher()) {
 
-            cryptoObject = new FingerprintManagerCompat.CryptoObject(cipher);
+            FingerprintManagerCompat.CryptoObject cryptoObject = new FingerprintManagerCompat.CryptoObject(cipher);
             FingerprintManagerCompat fingerprintManagerCompat = FingerprintManagerCompat.from(context);
 
-            fingerprintManagerCompat.authenticate(cryptoObject, 0, new CancellationSignal(),
+            fingerprintManagerCompat.authenticate(cryptoObject, 0, cancellationSignal,
                     new FingerprintManagerCompat.AuthenticationCallback() {
                         @Override
                         public void onAuthenticationError(int errMsgId, CharSequence errString) {
@@ -121,7 +120,7 @@ public class BiometricManagerV23 {
             keyStore = KeyStore.getInstance("AndroidKeyStore");
             keyStore.load(null);
 
-            keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
+            KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
             keyGenerator.init(new
                     KeyGenParameterSpec.Builder(KEY_NAME, KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
                     .setBlockModes(KeyProperties.BLOCK_MODE_CBC)

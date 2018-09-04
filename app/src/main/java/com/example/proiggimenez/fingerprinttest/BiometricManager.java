@@ -4,16 +4,18 @@ import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.os.CancellationSignal;
 
 public class BiometricManager extends BiometricManagerV23 {
 
 
-    protected BiometricManager(final BiometricBuilder biometricBuilder) {
+    BiometricManager(final BiometricBuilder biometricBuilder) {
         this.context = biometricBuilder.context;
         this.title = biometricBuilder.title;
         this.subtitle = biometricBuilder.subtitle;
         this.description = biometricBuilder.description;
         this.negativeButtonText = biometricBuilder.negativeButtonText;
+        this.cancellationSignal = biometricBuilder.cancellationSignal;
     }
 
 
@@ -82,9 +84,10 @@ public class BiometricManager extends BiometricManagerV23 {
         private String subtitle;
         private String description;
         private String negativeButtonText;
+        private CancellationSignal cancellationSignal;
 
         private Context context;
-        public BiometricBuilder(Context context) {
+        BiometricBuilder(Context context) {
             this.context = context;
         }
 
@@ -103,9 +106,13 @@ public class BiometricManager extends BiometricManagerV23 {
             return this;
         }
 
-
         public BiometricBuilder setNegativeButtonText(@NonNull final String negativeButtonText) {
             this.negativeButtonText = negativeButtonText;
+            return this;
+        }
+
+        public BiometricBuilder setCancellationSignal(@NonNull final CancellationSignal cancellationSignal) {
+            this.cancellationSignal = cancellationSignal;
             return this;
         }
 
